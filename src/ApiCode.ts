@@ -1,3 +1,5 @@
+import {Bus,longlat,stopPoint,BusStop} from "./interfaces";
+
 async function getStopIDToFirst5Buses(stopID : string): Promise<Bus[]> {
     const  myUrl : string = `https://api.tfl.gov.uk/StopPoint/${stopID}/Arrivals`;
     const response = await fetch(myUrl);
@@ -7,30 +9,7 @@ async function getStopIDToFirst5Buses(stopID : string): Promise<Bus[]> {
 
   }
 
-  export interface Bus {
-    lineName: string
-    timeToStation: string
-  }
-
-
-  export interface BusStop {
-   
-    stationName: string;
-    buses : Bus[]
   
-}
-
-export interface longlat {
-   
-    longitude: string;
-    latitude : string;
-  
-}
-
-interface stopPoint{
-    naptanId : string
-    commonName : string
-}
 
 async function getPostCodeToLongLat(postcode : string) : Promise<longlat>  {
     const myUrl : string = `https://api.postcodes.io/postcodes/${postcode}`;

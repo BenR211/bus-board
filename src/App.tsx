@@ -1,14 +1,18 @@
 import React, {useState} from 'react';
-import getPostCodeToFirst5BusesAt2NearestBusStops, { BusStop } from "./ApiCode";
-
+import getPostCodeToFirst5BusesAt2NearestBusStops from "./ApiCode";
+import {BusStop} from "./interfaces";
 
 
 type Props = {
   busStops: BusStop[]
 }
+
+
 type subListProp = {
   busStop: BusStop
 }
+
+
 
 async function getBuses(postcode: string): Promise<BusStop[]> {
     // very basic testing string, you'll likely return a list of strings or JSON objects instead!
