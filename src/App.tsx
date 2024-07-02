@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import postCodeToFirst5BusesAt2NearestBusStops, { BusStop } from "./ApiCode";
+import getPostCodeToFirst5BusesAt2NearestBusStops, { BusStop } from "./ApiCode";
 
 
 
@@ -12,7 +12,7 @@ type subListProp = {
 
 async function getBuses(postcode: string): Promise<BusStop[]> {
     // very basic testing string, you'll likely return a list of strings or JSON objects instead!
-    const arrivingBuses = await postCodeToFirst5BusesAt2NearestBusStops(postcode)
+    const arrivingBuses = await getPostCodeToFirst5BusesAt2NearestBusStops(postcode)
     
     //const postcodeString = (postcode === "") ? "" : ` - given postcode is ${postcode}`;
     return  arrivingBuses;
