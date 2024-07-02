@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import getPostCodeToFirst5BusesAt2NearestBusStops, { BusStop } from "./ApiCode";
+import { table } from 'console';
 
 
 
@@ -23,13 +24,25 @@ function App(): React.ReactElement {
     
     async function formHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault(); // to stop the form refreshing the page when it submits
-        const data = await getBuses(postcode);
-
-        setTableData(data);
+        fetchBusData()
     }
+
     function updatePostcode(data: React.ChangeEvent<HTMLInputElement>): void {
         setPostcode(data.target.value)
     }
+    async function fetchBusData() {
+      let busData = await getBuses(postcode)
+      setTableData(busData)
+    }
+
+    useEffect(() => {
+      let timerId = setInterval(() => {
+        if (tableData) fetchBusData();
+      }, 30000);
+      return () => {
+        clearInterval(timerId)
+      }
+    }, [tableData])
     
    
     return ( <>
@@ -41,7 +54,7 @@ function App(): React.ReactElement {
         </form>
         <ul></ul>
        
-        <Buildbuslist busStops={tableData} />
+        <BuildBusList busStops={tableData} />
     </>);
 }
 
@@ -49,23 +62,23 @@ function App(): React.ReactElement {
 
 
 
-function Buildbuslist (props : Props){
+function BuildBusList (props : Props){
   const listElms = props.busStops.map(busStop => 
-    <li key={busStop.stationName}><div>{busStop.stationName}</div> <BuildsubList busStop={busStop} /></li>
+    <li key={busStop.stationName} className="bus-stop"><h2>{busStop.stationName}</h2> <BuildSubList busStop={busStop} /></li>
   )
 
-  return (<ul>
+  return (<ul className="bus-board">
     {listElms}
-</ul>)
+  </ul>)
 }
 
-function BuildsubList  (props : subListProp) {
+function BuildSubList  (props : subListProp) {
   props.busStop.buses.sort((a, b) => a.timeToStation > b.timeToStation ? 1 : -1)
   const listElms = props.busStop.buses.map(bus =>
     <li>{bus.lineName + " in " + Math.trunc(parseInt(bus.timeToStation) / 60) + " mins"} </li>
     )
   return (
-    <ul>{listElms}</ul>
+    <ul className="bus-list">{listElms}</ul>
   )
 }
 

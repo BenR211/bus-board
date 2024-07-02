@@ -77,3 +77,38 @@ code {
 .active {
   background-color: #fa2020;
 }
+.bus-board {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 20px;
+  width: fit-content;
+}
+
+.bus-stop {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(223, 0, 0, 0.1);
+  width:100%;
+}
+
+.bus-stop h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.bus-list {
+  list-style: none;
+  padding: 0;
+}
+
+.bus-list li {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.bus-list ul {
+  margin-left: 20px;
+}
