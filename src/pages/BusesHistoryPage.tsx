@@ -1,4 +1,3 @@
-// Save this code in a file named "BusesHistory.tsx"
 import React from 'react';
 import Carousel from '../Carousel';
 

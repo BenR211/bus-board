@@ -30,6 +30,7 @@ const Carousel = () => {
         <img
           key={currentIndex}
           src={images[currentIndex]}
+          alt="images of buses"
         /><div className="slide_direction">
         <div className="left" onClick={handlePrevious}>
           <svg
