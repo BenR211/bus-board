@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
+import postCodeToFirst5BusesAt2NearestBusStops, { BusStop } from "./ApiCode";
 
-import postCodeToFirst5BusesAt2NearestBusStops from "./ApiCode";
+
 
 type Props = {
-  busStops: JSON[][]
+  busStops: BusStop[]
 }
 type subListProp = {
-  buses: JSON[]
+  busStop: BusStop
 }
 
-async function getBuses(postcode: string): Promise<JSON[][]> {
+async function getBuses(postcode: string): Promise<BusStop[]> {
     // very basic testing string, you'll likely return a list of strings or JSON objects instead!
     const arrivingBuses = await postCodeToFirst5BusesAt2NearestBusStops(postcode)
     
@@ -18,7 +19,7 @@ async function getBuses(postcode: string): Promise<JSON[][]> {
 }
 function App(): React.ReactElement {
     const [postcode, setPostcode] = useState<string>("");
-    const [tableData, setTableData] = useState<JSON[][]>([[]]);
+    const [tableData, setTableData] = useState<BusStop[]>([]);
     
     async function formHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault(); // to stop the form refreshing the page when it submits
@@ -31,7 +32,7 @@ function App(): React.ReactElement {
     }
     
    
-    return <>
+    return ( <>
         <h1> BusBoard </h1>
         <form action="" onSubmit={formHandler}>
             <label htmlFor="postcodeInput"> Postcode: </label>
@@ -41,21 +42,16 @@ function App(): React.ReactElement {
         <ul></ul>
        
         <Buildbuslist busStops={tableData} />
-    </>;
+    </>);
 }
 
 
-interface businfo {
-   
-    stationName: string;
-    lineName : string;
-    arrivalTime: string;
-  
-}
+
+
 
 function Buildbuslist (props : Props){
   const listElms = props.busStops.map(busStop => 
-    <li ><BuildsubList buses={busStop} /></li>
+    <li key={busStop.stationName}><div>{busStop.stationName}</div> <BuildsubList busStop={busStop} /></li>
   )
 
   return (<ul>
@@ -64,13 +60,10 @@ function Buildbuslist (props : Props){
 }
 
 function BuildsubList  (props : subListProp) {
-  
-
-  const listElms = props.buses.map(bus =>
-    <li>{(bus as any).stationName} </li>
-    
-
-  )
+  props.busStop.buses.sort((a, b) => a.timeToStation > b.timeToStation ? 1 : -1)
+  const listElms = props.busStop.buses.map(bus =>
+    <li>{bus.lineName + " in " + Math.trunc(parseInt(bus.timeToStation) / 60) + " mins"} </li>
+    )
   return (
     <ul>{listElms}</ul>
   )
