@@ -1,15 +1,21 @@
 import { Outlet, Link } from "react-router-dom";
 
+const linkStyle = {
+  margin: "1rem",
+  textDecoration: "none",
+  color: 'white'
+};
+
 const Layout = () => {
     return (
       <>
         <nav>
-          <ul>
-            <li>
-              <Link to="/">App</Link>
+          <ul className = "nav">
+            <li className = "task">
+              <Link style= {linkStyle} to="/">App</Link>
             </li>
-            <li>
-              <Link to="/history">Our History</Link>
+            <li className = "task">
+              <Link style = {linkStyle} to="/history">Our History</Link>
             </li>
           </ul>
         </nav>

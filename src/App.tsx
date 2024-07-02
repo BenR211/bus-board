@@ -75,8 +75,9 @@ function App(): React.ReactElement {
             <input type="text" id="postcodeInput" onChange={updatePostcode}/>
             <input type="submit" value="Submit"/>
         </form>
-       
-        <BuildOuterBusStopList busStops={tableData} />
+        <div className="centre">
+          <BuildOuterBusStopList busStops={tableData} />
+        </div>
      </div>);
 }
 
