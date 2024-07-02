@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-
 import postCodeToFirst5BusesAt2NearestBusStops, { BusStop } from "./ApiCode";
+
+
 
 type Props = {
   busStops: BusStop[]
@@ -31,7 +32,7 @@ function App(): React.ReactElement {
     }
     
    
-    return <>
+    return ( <>
         <h1> BusBoard </h1>
         <form action="" onSubmit={formHandler}>
             <label htmlFor="postcodeInput"> Postcode: </label>
@@ -41,8 +42,9 @@ function App(): React.ReactElement {
         <ul></ul>
        
         <Buildbuslist busStops={tableData} />
-    </>;
+    </>);
 }
+
 
 
 
