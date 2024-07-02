@@ -12,6 +12,21 @@ type subListProp = {
   busStop: BusStop
 }
 
+function postcodeValidator(postcode: string): Boolean {
+  const codes = postcode.split(" ")
+  if (codes.length !== 2) {
+    return false
+  } else {
+    if (codes[0].length < 2 || codes[0].length > 4 || !(/^[a-zA-Z]/.test(codes[0][0])) || !(/^[a-zA-Z0-9]/.test(codes[0]))) {
+      return false
+    }
+    if (codes[1].length !== 3 || !(/^[0-9]/.test(codes[1][0]))) {
+      return false
+    }
+  }
+  return true
+}
+
 
 
 async function getBuses(postcode: string): Promise<BusStop[]> {
@@ -27,9 +42,12 @@ function App(): React.ReactElement {
     
     async function formHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
         event.preventDefault(); // to stop the form refreshing the page when it submits
-        const data = await getBuses(postcode);
-
-        setTableData(data);
+        if (postcodeValidator(postcode)) {
+          const data = await getBuses(postcode); 
+          setTableData(data);
+        } else {
+          alert("invalid postcode")
+        }
     }
     function updatePostcode(data: React.ChangeEvent<HTMLInputElement>): void {
         setPostcode(data.target.value)
