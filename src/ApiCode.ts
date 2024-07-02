@@ -1,4 +1,4 @@
-import {Bus,longlat,stopPoint,BusStop,PromisaryBusStop} from "./interfaces";
+import {Bus,longlat,stopPoint,BusStop} from "./interfaces";
 
 async function getStopIDToFirst5Buses(stopID : string): Promise<Bus[]> {
     const  myUrl : string = `https://api.tfl.gov.uk/StopPoint/${stopID}/Arrivals`;

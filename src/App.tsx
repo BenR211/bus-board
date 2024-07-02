@@ -59,7 +59,7 @@ function App(): React.ReactElement {
 
     useEffect(() => {
       let timerId = setInterval(() => {
-        if (tableData) fetchBusData();
+        if (postcode && tableData) fetchBusData();
       }, 30000);
       return () => {
         clearInterval(timerId)

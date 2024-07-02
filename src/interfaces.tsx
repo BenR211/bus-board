@@ -7,14 +7,8 @@ export interface Bus {
   export interface BusStop {
    
     stationName: string;
-    buses : Bus[]
-  
-}
 
-export interface PromisaryBusStop {
-   
-    stationName: string;
-    buses : Promise<Bus[]>
+    buses : Bus[]
   
 }
 
