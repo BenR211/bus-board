@@ -46,15 +46,16 @@ function App(): React.ReactElement {
     
    
     return ( <>
+      <div className="bus-board-page">
         <h1> BusBoard </h1>
         <form action="" onSubmit={formHandler}>
             <label htmlFor="postcodeInput"> Postcode: </label>
             <input type="text" id="postcodeInput" onChange={updatePostcode}/>
             <input type="submit" value="Submit"/>
         </form>
-        <ul></ul>
        
         <BuildBusList busStops={tableData} />
+      </div>
     </>);
 }
 

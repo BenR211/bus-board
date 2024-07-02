@@ -11,6 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bus-board-page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
 .buses-history-page {
   display: flex;
   align-items: center;
@@ -84,6 +90,8 @@ code {
   flex-direction: column;
   gap: 20px;
   width: fit-content;
+  align-items: center;
+  margin-right: 20px;
 }
 
 .bus-stop {
