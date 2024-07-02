@@ -1,9 +1,15 @@
 import {Bus,longlat,stopPoint,BusStop,PromisaryBusStop} from "./interfaces";
 
+
+function sleep(ms: number) {
+    return new Promise (resolve => setTimeout(resolve,ms));
+}
+
 async function getStopIDToFirst5Buses(stopID : string): Promise<Bus[]> {
     const  myUrl : string = `https://api.tfl.gov.uk/StopPoint/${stopID}/Arrivals`;
     const response = await fetch(myUrl);
     const buses = await response.json();
+    await sleep(10000)
     return buses.slice(0, 5)
 
 

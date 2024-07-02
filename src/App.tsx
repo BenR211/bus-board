@@ -66,6 +66,10 @@ function App(): React.ReactElement {
     </>);
 }
 
+function LoadingBar() {
+  
+}
+
 
 
 
