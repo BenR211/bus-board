@@ -43,9 +43,8 @@ function App(): React.ReactElement {
             <input type="text" id="postcodeInput" onChange={updatePostcode}/>
             <input type="submit" value="Submit"/>
         </form>
-        <ul></ul>
        
-        <Buildbuslist busStops={tableData} />
+        <BuildOuterBusStopList busStops={tableData} />
     </>);
 }
 
@@ -53,7 +52,7 @@ function App(): React.ReactElement {
 
 
 
-function Buildbuslist (props : Props){
+function BuildOuterBusStopList (props : Props){
   const listElms = props.busStops.map(busStop => 
     <li key={busStop.stationName}><div>{busStop.stationName}</div> <BuildsubList busStop={busStop} /></li>
   )

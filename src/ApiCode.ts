@@ -1,4 +1,4 @@
-import {Bus,longlat,stopPoint,BusStop} from "./interfaces";
+import {Bus,longlat,stopPoint,BusStop,PromisaryBusStop} from "./interfaces";
 
 async function getStopIDToFirst5Buses(stopID : string): Promise<Bus[]> {
     const  myUrl : string = `https://api.tfl.gov.uk/StopPoint/${stopID}/Arrivals`;
@@ -36,12 +36,15 @@ async function  getPostCodeToFirst5BusesAt2NearestBusStops(postcode : string): P
     const busStops: stopPoint[] = await getLongLatToBusStopIds(longLat)
     
 
-    let busStopInfo: BusStop[] = []
+    let busStopInfo: BusStop[]= await Promise.all(busStops.map(async (busStop) => {
+        const buses = await getStopIDToFirst5Buses(busStop.naptanId);
+        return { stationName: busStop.commonName, buses }
+    }));
     
-    for (let i = 0; i < busStops.length; i++) {
-        let temp = await getStopIDToFirst5Buses(busStops[i].naptanId)
-        busStopInfo.push({stationName: busStops[i].commonName, buses: temp})
-    }
+    //for (let i = 0; i < busStops.length; i++) {
+    //    let temp = await getStopIDToFirst5Buses(busStops[i].naptanId)
+    //    busStopInfo.push({stationName: busStops[i].commonName, buses: temp})
+   // }
     return busStopInfo
 }
 

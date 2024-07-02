@@ -11,6 +11,13 @@ export interface Bus {
   
 }
 
+export interface PromisaryBusStop {
+   
+    stationName: string;
+    buses : Promise<Bus[]>
+  
+}
+
 export  interface longlat {
    
     longitude: string;
