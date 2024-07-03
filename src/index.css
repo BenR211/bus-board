@@ -34,6 +34,7 @@ code {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 33.33%
 }
 .buses-history-page {
   display: flex;
