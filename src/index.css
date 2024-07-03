@@ -108,8 +108,11 @@ code {
 }
 
 .bus-list {
+  display: flex;
+  flex-direction: column;
   list-style: none;
   padding: 0;
+  justify-content: space-around;
 }
 
 .bus-list li {
@@ -119,4 +122,8 @@ code {
 
 .bus-list ul {
   margin-left: 20px;
+}
+.bus {
+  display: flex;
+  justify-content: space-between;
 }

@@ -1,9 +1,12 @@
+import { platform } from "os";
 import {Bus,longlat,stopPoint,BusStop} from "./interfaces";
+import { IndexKind } from "typescript";
 
 async function getStopIDToFirst5Buses(stopID : string): Promise<Bus[]> {
     const  myUrl : string = `https://api.tfl.gov.uk/StopPoint/${stopID}/Arrivals`;
     const response = await fetch(myUrl);
     const buses = await response.json();
+    console.log(buses[0])
     return buses.slice(0, 5)
 
 
@@ -24,8 +27,7 @@ async function getLongLatToBusStopIds(longLat : longlat) : Promise<stopPoint[]> 
     
     const { stopPoints } = await response.json();
     console.log(stopPoints)
-    
-    const busStopInfo = stopPoints.slice(0, 2).map((stopPoint: stopPoint) => ({ naptanId: stopPoint.naptanId, commonName : stopPoint.commonName  }));
+    const busStopInfo = stopPoints.slice(0, 2).map((stopPoint: stopPoint) => ({ naptanId: stopPoint.naptanId, commonName : stopPoint.commonName, indicator: stopPoint.indicator  }));
     
     return busStopInfo
 
@@ -38,7 +40,7 @@ async function  getPostCodeToFirst5BusesAt2NearestBusStops(postcode : string): P
 
     let busStopInfo: BusStop[]= await Promise.all(busStops.map(async (busStop) => {
         const buses = await getStopIDToFirst5Buses(busStop.naptanId);
-        return { stationName: busStop.commonName, buses }
+        return { stationName: busStop.commonName, buses, stopCode: busStop.indicator}
     }));
     
     //for (let i = 0; i < busStops.length; i++) {

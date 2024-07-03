@@ -86,7 +86,7 @@ function App(): React.ReactElement {
 
 function BuildOuterBusStopList (props : Props){
   const listElms = props.busStops.map(busStop => 
-    <li key={busStop.stationName} className="bus-stop"><h2>{busStop.stationName}</h2> <BuildSubList busStop={busStop} /></li>
+    <li key={busStop.stationName} className="bus-stop"><h2>{busStop.stationName + ` (${busStop.stopCode})` }</h2> <BuildSubList busStop={busStop} /></li>
   )
 
   return (<ul className="bus-board">
@@ -97,7 +97,7 @@ function BuildOuterBusStopList (props : Props){
 function BuildSubList  (props : subListProp) {
   props.busStop.buses.sort((a, b) => a.timeToStation > b.timeToStation ? 1 : -1)
   const listElms = props.busStop.buses.map(bus =>
-    <li>{bus.lineName + " in " + Math.trunc(parseInt(bus.timeToStation) / 60) + " mins"} </li>
+    <li className="bus"><div>{bus.lineName + " " + bus.towards }</div><div>{ Math.trunc(parseInt(bus.timeToStation) / 60) + " mins"} </div></li>
     )
   return (
     <ul className="bus-list">{listElms}</ul>
