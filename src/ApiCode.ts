@@ -31,7 +31,7 @@ async function getLongLatToBusStopIds(longLat : longlat) : Promise<stopPoint[]> 
 
 }
 
-async function  getPostCodeToFirst5BusesAt2NearestBusStops(postcode : string): Promise<BusStop[]> {
+export async function  getPostCodeToFirst5BusesAt2NearestBusStops(postcode : string): Promise<BusStop[]> {
     const longLat = await getPostCodeToLongLat(postcode)
     const busStops: stopPoint[] = await getLongLatToBusStopIds(longLat)
     
@@ -48,4 +48,21 @@ async function  getPostCodeToFirst5BusesAt2NearestBusStops(postcode : string): P
     return busStopInfo
 }
 
-export default getPostCodeToFirst5BusesAt2NearestBusStops
+export async function  getPostCodeToFirst5BusesAt2NearestBusStopsWithLat(longLat : longlat): Promise<BusStop[]> {
+    //const longLat = await getPostCodeToLongLat(postcode)
+    const busStops: stopPoint[] = await getLongLatToBusStopIds(longLat)
+    
+
+    let busStopInfo: BusStop[]= await Promise.all(busStops.map(async (busStop) => {
+        const buses = await getStopIDToFirst5Buses(busStop.naptanId);
+        return { stationName: busStop.commonName, buses }
+    }));
+    
+    //for (let i = 0; i < busStops.length; i++) {
+    //    let temp = await getStopIDToFirst5Buses(busStops[i].naptanId)
+    //    busStopInfo.push({stationName: busStops[i].commonName, buses: temp})
+   // }
+    return busStopInfo
+}
+
+

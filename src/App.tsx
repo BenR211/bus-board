@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import getPostCodeToFirst5BusesAt2NearestBusStops from "./ApiCode";
-import {BusStop} from "./interfaces";
+import {getPostCodeToFirst5BusesAt2NearestBusStops, getPostCodeToFirst5BusesAt2NearestBusStopsWithLat} from "./ApiCode";
+import {BusStop, longlat} from "./interfaces";
 
 
 type Props = {
@@ -49,6 +49,14 @@ function App(): React.ReactElement {
         }
     }
 
+    async function otherFormHandler(){
+        getUserLocation()
+    }
+
+     function fillInData(stopdata : BusStop[]){
+      setTableData(stopdata);
+    }
+
     function updatePostcode(data: React.ChangeEvent<HTMLInputElement>): void {
         setPostcode(data.target.value)
     }
@@ -77,6 +85,7 @@ function App(): React.ReactElement {
         </form>
        
         <BuildOuterBusStopList busStops={tableData} />
+        <UseTheUsersLocation />
      </div>);
 }
 
@@ -106,5 +115,35 @@ function BuildSubList  (props : subListProp) {
 
 
 
+function UseTheUsersLocation (){
+  return (
+    <button onClick={getUserLocation}>Use your current location</button>
+  )
+}
+
+function getUserLocation (){
+  const extraArg : string = "apples"
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((pos) => success(pos, extraArg), error);
+  } else {
+    console.log("Geolocation not supported");
+    
+  }
+}
+async function success(pos : GeolocationPosition, extraArg : string) {
+  
+  console.log(pos.coords.latitude);
+  console.log(pos.coords.longitude);
+  alert(`${pos.coords.latitude} and ${pos.coords.longitude}`)
+  const latl : longlat = {longitude : pos.coords.longitude.toString(), latitude : pos.coords.latitude.toString() }
+  const arrival_data = await getPostCodeToFirst5BusesAt2NearestBusStopsWithLat(latl)
+  alert(extraArg)
+
+  
+
+}
+function error() {
+  console.log("Unable to retrieve your location");
+}
 
 export default App;
